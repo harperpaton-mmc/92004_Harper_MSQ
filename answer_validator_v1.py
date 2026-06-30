@@ -1,23 +1,32 @@
 # First interation of random number generator;
 import random
 
-# Checks to see if the user's answer was correct
-def answer_checker(question_type):
+# Collects user answer (integer)
+def int_check(question):
     while True:
-        # Compares user answer to correct answer
+        # Returns error message if user enters something other than an integer
         error = "[Please enter an integer!]"
+
         try:
+            # Prompts user for the question's answer
+            response = int(input(question))
 
-            response = int(input(question_type))
-
-            if response == answer:
-                return "correct"
-
-            else:
-                return "incorrect"
+            # Returns user answer so it can be stored
+            return response
 
         except ValueError:
             print(error)
+
+# Compares the user's answer to the correct answer and returns "correct" if they match or "incorrect" if they don't
+def answer_compare(user, expected):
+
+    if user == expected:
+        answer_status = "correct"
+
+    else:
+        answer_status = "incorrect"
+
+    return answer_status
 
 
 # Initialising variables
@@ -31,22 +40,34 @@ random_2 = random.randint(1,50)
 random_3 = random.randint(1,50)
 
 # Chooses a type of question
-question = random.choice(question_type)
+set_question = random.choice(question_type)
 
 # Generates a different question based on the question type
-if question == "kinetic energy":
+if set_question == "kinetic energy":
     print(f"A {random_1}kg object is moving at a rate of {random_2}m/s")
-    answer = f"{random_1 * (random_2 * random_2) * 0.5:.0f}"
+    correct_answer = f"{random_1 * (random_2 * random_2) * 0.5:.0f}"
     # for testing
-    print(answer)
-    user_answer = answer_checker("What is the kinetic energy of the object? ")
-    print(user_answer)
+    print(correct_answer)
+    user_answer = int_check("What is the kinetic energy of the object? ")
 
 
-elif question == "gravitational energy":
+elif set_question == "gravitational energy":
     print(f"A {random_1}kg object sits {random_2}m off the ground")
-    answer = f"{random_1 * random_2 * 10:.0f}"
+    correct_answer = f"{random_1 * random_2 * 10:.0f}"
     # for testing
-    print(answer)
-    user_answer = answer_checker("What is the gravitational potential energy of the object? ")
-    print(user_answer)
+    print(correct_answer)
+    user_answer = int_check("What is the gravitational potential energy of the object? ")
+
+# Temporary fix
+else:
+    print("Program error")
+    correct_answer = "Error"
+    user_answer = "error"
+
+result = answer_compare(user_answer, correct_answer)
+
+if result == "correct":
+    print("Correct!")
+
+elif result == "incorrect":
+    print("Wrong!")
