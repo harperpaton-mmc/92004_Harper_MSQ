@@ -45,23 +45,28 @@ set_question = random.choice(question_type)
 # Generates a different question based on the question type
 if set_question == "kinetic energy":
     print(f"A {random_1}kg object is moving at a rate of {random_2}m/s")
-    correct_answer = f"{random_1 * (random_2 * random_2) * 0.5:.0f}"
+    # Calculates the correct answer
+    find_answer = f"{random_1 * (random_2 * random_2) * 0.5:.0f}"
+    # Converts the correct answer into an integer so it can be compared to the user's answer
+    correct_answer = int(find_answer)
     # for testing
-    print(correct_answer)
+    print(find_answer)
     user_answer = int_check("What is the kinetic energy of the object? ")
-
 
 elif set_question == "gravitational energy":
     print(f"A {random_1}kg object sits {random_2}m off the ground")
-    correct_answer = f"{random_1 * random_2 * 10:.0f}"
-    # for testing
-    print(correct_answer)
+    # Calculates the correct answer
+    find_answer = f"{random_1 * random_2 * 10:.0f}"
+    # Converts the correct answer into an integer so it can be compared to the user's answer
+    correct_answer = int(find_answer)
+    print(find_answer)
     user_answer = int_check("What is the gravitational potential energy of the object? ")
 
-# Temporary fix
+# Temporary fix for unresolved variables
 else:
     print("Program error")
-    correct_answer = "Error"
+    find_answer = "Error"
+    correct_answer = int(find_answer)
     user_answer = "error"
 
 result = answer_compare(user_answer, correct_answer)
