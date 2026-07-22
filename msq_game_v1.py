@@ -23,25 +23,51 @@ def yes_no_checker(question, valid_ans=('yes', 'no')):
         print(error)
         print()
 
-
 # Prints the instructions for the game
 def instructions():
     print("""
-    •••How to Play•••
+How to Play
+────────────────────────────────────
+Welcome to the Level 1 Mechanical Science Quiz! 
+In this quiz, you are presented with a set number of questions to do with mechanical energy. 
 
-    Welcome to the Level 1 Mechanical Science Quiz! 
-    In this quiz, you are presented with a set number of questions to do with mechanical energy. 
+At the start, you can select the number of questions you would like to answer. If you wish, you can also view a list of formulas (for revision, we recommend trying to use the formula from memory).
 
-    At the start, you can select the number of questions you would like to answer. If you wish, you can also view a list of formulas (for revision, we recommend trying to use the formula from memory).
+You will have to use a variety of scientific formulas to calculate the answers to the questions.
 
-    You will have to use a variety of scientific formulas to calculate the answers to the questions.
+When the quiz is completed, you can view your overall results and (if you wish) play again.
 
-    When the quiz is completed, you can view your overall results and (if you wish) play again.
+Extra Tips
+────────────────────────────────────
 
-    •••Extra Tips•••
+Round all answers up to one decimal place.
+Don't include units in your answers!
+────────────────────────────────────
 
-    Round all answers up to one decimal place.
-    Don't include units in your answers!
+    """)
+
+# Prints the necessary for formulas
+def formulas():
+    print("""
+Relevant Formulas
+────────────────────────────────────
+Energy: 
+Gravitational Energy = Mass * Gravity * Height
+Kinetic Energy = ½ Mass * Velocity²
+
+Work and Power:
+Force = Mass * Gravity
+Work = Force * Distance
+Power = Work / Time
+
+Electricity: 
+Voltage = Current * Resistance
+Power = Voltage * Current
+
+Heat:
+Heat Energy (during an increase in temperature) = Mass * Specific Heat Capacity * Change in Temperature
+Heat Energy (during a change in state) = Mass * Latent Heat 
+────────────────────────────────────
 
     """)
 
@@ -91,28 +117,40 @@ def answer_compare(user, expected):
     return answer_status
 
 
-# Initialising variables
+# Initializing variables
 question_type = ["kinetic energy", "gravitational energy"]
 rounds_played = 0
 
 # Main routine begins below
-
 # Game title (start of program)
-print("•••⁀➴ Mechanical Science Quiz ⚡•••"
+print("⁀➴ Mechanical Science Quiz ⚡"
       "\n────────────────────────────────────")
 print()
 
+# Questions/Setting before game loop begins are below
 # Asks the user if they want to see the instructions before playing
 want_instructions = yes_no_checker("Would you like to view the instructions? ")
 if want_instructions == "yes":
     instructions()
 
+# Asks the user if they want to see the formulas before playing
+want_formulas = yes_no_checker("Would you like to view the formulas?")
+if want_formulas == "yes":
+    formulas()
+
 # Asks the user for the number of questions in the quiz
-num_rounds = questions_checker("How many questions long do you want the quiz to be? ")
+num_rounds = questions_checker("Select a number of questions: ")
 
 # Game loop starts here
+print()
+
 # Code below generates the questions and stops generating them once the user has been asked the correct number of questions
 while rounds_played < num_rounds:
+
+    # Generates a heading for each "round" (question)
+    round_heading = f"Question {rounds_played + 1} / {num_rounds}"
+    print(round_heading)
+    print("────────────────────────────────────")
 
     # Generates three random numbers 1-50 for the question
     random_1 = random.randint(1,50)
@@ -149,6 +187,7 @@ while rounds_played < num_rounds:
         correct_answer = int(find_answer)
         user_answer = "error"
 
+    # Finds whether the user's answer is right or wrong
     result = answer_compare(user_answer, correct_answer)
 
     if result == "correct":
@@ -158,3 +197,8 @@ while rounds_played < num_rounds:
     elif result == "incorrect":
         print("Wrong!")
         rounds_played += 1
+
+# End of loop
+# Statisitics Area
+# Optional play again
+# Game end
