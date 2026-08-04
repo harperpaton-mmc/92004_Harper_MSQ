@@ -31,9 +31,13 @@ How to Play
 Welcome to the Level 1 Mechanical Science Quiz! 
 
 In this quiz, you are presented with a set number of questions to do with mechanical energy. 
+
 At the start, you can select the number of questions you would like to answer. 
+
 If you wish, you can also view a list of formulas (for revision we recommend trying to use the formula from memory).
+
 You will have to use a variety of scientific formulas to calculate the answers to the questions.
+
 When the quiz is completed, you can view your overall results and (if you wish) play again.
 
 Extra Tips
@@ -139,9 +143,11 @@ def display_statistics():
 
     # Displayed information
     print("Answer Overview"
-          "────────────────────")
+          "\n────────────────────")
     for key, value in displayed_scores.items():
         print(f"{key}: {value}")
+    print("────────────────────")
+    print()
 
 # Defining classes
 class Counter: # This class is used to calculate the user's accuracy with that question type.
@@ -160,182 +166,178 @@ class Counter: # This class is used to calculate the user's accuracy with that q
         else:
             return f"{correct_amount} / {total_amount}"
 
-# Initialising variables
+# Initialising static variables
+# Variable for running the main game (so it can repeat if the uses wants to play again)
+active = True
+# List of possible question types to be randomly chosen from
 question_type = ["kinetic energy", "gravitational energy", "work", "power", "voltage", "circuit power", "heat increase", "heat change"]
-rounds_played = 0
-user_correct = 0
-user_incorrect = 0
-# Scorekeeping variables
-question_history = []
-answer_history = []
 
-# Main routine begins below
-# Game title (start of program)
-print("⁀➴ Mechanical Science Quiz ⚡"
-      "\n────────────────────────────────────")
-print()
+while active: # The reason I place the while loop here is that this is the point I want to program to repeat from if the user plays again
+    # Initialising game variables (these reset every new quiz)
+    rounds_played = 0
+    user_correct = 0
+    user_incorrect = 0
+    # Scorekeeping variables
+    question_history = []
+    answer_history = []
 
-print("Welcome to the Mechanical Science Quiz!")
-print()
+    # Main routine begins below
+    # Game title (start of program)
+    print("⁀➴ Mechanical Science Quiz ⚡"
+          "\n────────────────────────────────────")
+    print()
 
-# Questions/Setting before game loop begins are below
-# Asks the user if they want to see the instructions before playing
-want_instructions = yes_no_checker("Would you like to view the instructions? ")
-if want_instructions == "yes":
-    instructions()
+    print("Welcome to the Mechanical Science Quiz!")
+    print()
 
-# Asks the user if they want to see the formulas before playing
-want_formulas = yes_no_checker("Would you like to view formulas? ")
-if want_formulas == "yes":
-    formulas()
+    # Questions/Setting before game loop begins are below
+    # Asks the user if they want to see the instructions before playing
+    want_instructions = yes_no_checker("Would you like to view the instructions? ")
+    if want_instructions == "yes":
+        instructions()
 
-# Asks the user for the number of questions in the quiz
-num_rounds = questions_checker("Select the number of questions (between 1 and 50): ")
+    # Asks the user if they want to see the formulas before playing
+    want_formulas = yes_no_checker("Would you like to view formulas? ")
+    if want_formulas == "yes":
+        formulas()
 
-# Game loop starts here
-print()
-print("Quiz")
-print("────────────────────────────────────")
+    # Asks the user for the number of questions in the quiz
+    num_rounds = questions_checker("Select the number of questions (between 1 and 50): ")
 
-# Code below generates the questions and stops generating them once the user has been asked the correct number of questions
-while rounds_played < num_rounds:
-    # Generates a heading for each "round" (question)
-    round_heading = f"Question {rounds_played + 1} / {num_rounds}"
-    print(round_heading)
-    print("────────────────────")
+    # Game loop starts here
+    print()
+    print("⁀➴ Quiz Start! ⚡"
+    "\n────────────────────────────────────")
 
-    # Generates three random numbers 1-50 for the values in the questions
-    random_1 = random.randint(1,50)
-    random_2 = random.randint(1,50)
-    random_3 = random.randint(1,50)
-    # Chooses a type of question from the list
-    set_question = random.choice(question_type)
+    # Code below generates the questions and stops generating them once the user has been asked the correct number of questions
+    while rounds_played < num_rounds:
+        # Generates a heading for each "round" (question)
+        round_heading = f"Question {rounds_played + 1} / {num_rounds}"
+        print(round_heading)
+        print("────────────────────")
 
-    # Generates a different question based on the question type
-    # Kinetic Energy
-    if set_question == "kinetic energy":
-        print(f"A {random_1}kg object is moving at a rate of {random_2}m/s.")
-        # Calculates the correct answer
-        find_answer = f"{random_1 * (random_2 * random_2) * 0.5:.1f}"
-        # Converts the correct answer into an integer so it can be compared to the user's answer
-        correct_answer = int(float(find_answer))
-        # for testing
-        print(correct_answer)
-        user_answer = int_check("What is the kinetic energy of the object? ")
-    # Gravitational Energy
-    elif set_question == "gravitational energy":
-        print(f"A {random_1}kg object sits {random_2}m off the ground.")
-        # Calculates the correct answer
-        find_answer = f"{random_1 * 10 * random_2:.1f}"
-        # Converts the correct answer into an integer so it can be compared to the user's answer
-        correct_answer = int(float(find_answer))
-        print(correct_answer)
-        user_answer = int_check("What is the gravitational potential energy of the object? ")
-    # Work
-    elif set_question == "work":
-        print(f"A {random_1}kg object is lifted {random_2}m off the ground.")
-        # Calculates the correct answer
-        find_answer = f"{random_1 * 10 * random_2:.1f}"
-        # Converts the correct answer into an integer so it can be compared to the user's answer
-        correct_answer = int(float(find_answer))
-        print(correct_answer)
-        user_answer = int_check("How much work was done to move the object? ")
-    # Power
-    elif set_question == "power":
-        print(f"A crane lifts a {random_1}kg object {random_2}m off the ground in {random_3}s.")
-        # Calculates the correct answer
-        find_answer = f"{(random_1 * 10 * random_2) / random_3:.1f}"
-        # Converts the correct answer into an integer so it can be compared to the user's answer
-        correct_answer = int(float(find_answer))
-        print(correct_answer)
-        user_answer = int_check("What is the power of the crane? ")
-    # Voltage
-    elif set_question == "voltage":
-        print(f"A circuit has {random_1}Ω of resistance and a current of {random_2}A.")
-        # Calculates the correct answer
-        find_answer = f"{random_1 * random_2:.1f}"
-        # Converts the correct answer into an integer so it can be compared to the user's answer
-        correct_answer = int(float(find_answer))
-        print(correct_answer)
-        user_answer = int_check("What is the voltage supplied to the circuit? ")
-    # Power (in a circuit)
-    elif set_question == "circuit power":
-        print(f"A circuit is being powered by a {random_1}V battery and has a current of {random_2}A.")
-        # Calculates the correct answer
-        find_answer = f"{random_1 * random_2:.1f}"
-        # Converts the correct answer into an integer so it can be compared to the user's answer
-        correct_answer = int(float(find_answer))
-        print(correct_answer)
-        user_answer = int_check("What is the power of the circuit? ")
-    # Heat energy (temperature increase)
-    elif set_question == "heat increase":
-        print(f"{random_1}L of water undergoes a change in temperature from an initial temperature of {random_2}ºC to {random_3}ºC.")
-        # Calculates the correct answer
-        find_answer = f"{random_1 * 4200 * (random_2 - random_3):.1f}"
-        # Converts the correct answer into an integer so it can be compared to the user's answer
-        correct_answer = int(float(find_answer))
-        print(correct_answer)
-        user_answer = int_check("How much heat energy is used/lost to change the temperature? If heat is lost, write the answer as a negative number.  ")
-    # Heat energy (state change)
-    elif set_question =="heat change":
-        # Used to decide if the liquid in the question is being frozen (meaning the user will have to use the latent heat of fusion) or vapourised (meaning the user will have to use the latent heat of vapourisation)
-        change_type = ["cooled until it freezes into ice", "heated until it vapourises into steam"]
-        set_change = random.choice(change_type)
-        print(f"{random_1}L of water is {set_change}.")
-        # Calculates the correct answer (two different formulas)
-        if change_type == "cooled down until it freezes into ice":
-            find_answer = f"{random_1 * 334000:.1f}"
+        # Generates three random numbers 1-50 for the values in the questions
+        random_1 = random.randint(1,50)
+        random_2 = random.randint(1,50)
+        random_3 = random.randint(1,50)
+        # Chooses a type of question from the list
+        set_question = random.choice(question_type)
+
+        # Generates a different question based on the question type
+        # Kinetic Energy
+        if set_question == "kinetic energy":
+            print(f"A {random_1}kg object is moving at a rate of {random_2}m/s.")
+            # Calculates the correct answer
+            find_answer = f"{random_1 * (random_2 * random_2) * 0.5:.1f}"
+            # Converts the correct answer into an integer so it can be compared to the user's answer
+            user_answer = int_check("What is the kinetic energy of the object? ")
+        # Gravitational Energy
+        elif set_question == "gravitational energy":
+            print(f"A {random_1}kg object sits {random_2}m off the ground.")
+            # Calculates the correct answer
+            find_answer = f"{random_1 * 10 * random_2:.1f}"
+            user_answer = int_check("What is the gravitational potential energy of the object? ")
+        # Work
+        elif set_question == "work":
+            print(f"A {random_1}kg object is lifted {random_2}m off the ground.")
+            # Calculates the correct answer
+            find_answer = f"{random_1 * 10 * random_2:.1f}"
+            user_answer = int_check("How much work was done to move the object? ")
+        # Power
+        elif set_question == "power":
+            print(f"A crane lifts a {random_1}kg object {random_2}m off the ground in {random_3}s.")
+            # Calculates the correct answer
+            find_answer = f"{(random_1 * 10 * random_2) / random_3:.1f}"
+            user_answer = int_check("What is the power of the crane? ")
+        # Voltage
+        elif set_question == "voltage":
+            print(f"A circuit has {random_1}Ω of resistance and a current of {random_2}A.")
+            # Calculates the correct answer
+            find_answer = f"{random_1 * random_2:.1f}"
+            user_answer = int_check("What is the voltage supplied to the circuit? ")
+        # Power (in a circuit)
+        elif set_question == "circuit power":
+            print(f"A circuit is being powered by a {random_1}V battery and has a current of {random_2}A.")
+            # Calculates the correct answer
+            find_answer = f"{random_1 * random_2:.1f}"
+            user_answer = int_check("What is the power of the circuit? ")
+        # Heat energy (temperature increase)
+        elif set_question == "heat increase":
+            print(f"{random_1}L of water undergoes a change in temperature from an initial temperature of {random_2}ºC to {random_3}ºC.")
+            # Calculates the correct answer
+            find_answer = f"{random_1 * 4200 * (random_2 - random_3):.1f}"
+            user_answer = int_check("How much heat energy is used/lost to change the temperature? If heat is lost, write the answer as a negative number.  ")
+        # Heat energy (state change)
+        elif set_question =="heat change":
+            # Used to decide if the liquid in the question is being frozen (meaning the user will have to use the latent heat of fusion) or vapourised (meaning the user will have to use the latent heat of vapourisation)
+            change_type = ["cooled until it freezes into ice", "heated until it vapourises into steam"]
+            set_change = random.choice(change_type)
+            print(f"{random_1}L of water is {set_change}.")
+            # Calculates the correct answer (two different formulas)
+            if change_type == "cooled down until it freezes into ice":
+                find_answer = f"{random_1 * 334000:.1f}"
+            else:
+                find_answer = f"{random_1 * 2260000:.1f}"
+            user_answer = int_check("How much heat energy is used to change the state of the water?  ")
+
+        # Temporary fix for unresolved variable issue
         else:
-            find_answer = f"{random_1 * 2260000:.1f}"
+            print("Program error")
+            find_answer = "Error"
+            correct_answer = int(find_answer)
+            user_answer = "error"
+        # End of question generation
+
         # Converts the correct answer into an integer so it can be compared to the user's answer
         correct_answer = int(float(find_answer))
-        print(correct_answer)
-        user_answer = int_check("How much heat energy is used to change the state of the water?  ")
+        # Finds whether the user's answer is right or wrong
+        result = answer_compare(user_answer, correct_answer)
 
-    # Temporary fix for unresolved variable issue
-    else:
-        print("Program error")
-        find_answer = "Error"
-        correct_answer = int(find_answer)
-        user_answer = "error"
-    # End of question generation
+        # Displaying result
+        print(result)
+        if result == "✅ Correct!":
+            user_correct += 1
+            # Making a list of the questions (types) they got correct
+            answer_history.append(set_question)
 
-    # Finds whether the user's answer is right or wrong
-    result = answer_compare(user_answer, correct_answer)
+        elif result == "❌ Incorrect!":
+            # Giving the user the correct answe
+            print()
+            print(f"Your answer: {user_answer}, Correct answer: {correct_answer}")
+            user_incorrect += 1
 
-    # Displaying result
-    print(result)
-    if result == "✅ Correct!":
-        user_correct += 1
-        # Making a list of the questions (types) they got correct
-        answer_history.append(set_question)
+        # Adding to round counter
+        rounds_played += 1
+        # Storing question and correct/incorrect answer
+        question_history.append(set_question)
 
-    elif result == "❌ Incorrect!":
-        # Giving the user the correct answe
-        print()
-        print(f"Your answer: {user_answer}, Correct answer: {correct_answer}")
-        user_incorrect += 1
+        print() # Loop ends here (repeats until conditions are met)
 
-    # Adding to round counter
-    rounds_played += 1
-    # Storing question and correct/incorrect answer
-    question_history.append(set_question)
+    # End of loop
+    # After quiz content below
+    print("────────────────────────────────────")
+    print("🎉 Quiz Complete! 🎉")
+    print("────────────────────────────────────")
 
-    print() # Loop ends here (repeats until conditions are met)
+    print(f"Score: {user_correct}/{rounds_played}") # Basic score: how many questions the user got right across the whole quiz
+    print()
 
-# End of loop
-# After quiz content below
+    # Asking user if they want to view statistics
+    want_statistics = yes_no_checker("Would you like to see a detailed overview of your answers? ")
+    print()
+    if want_statistics == "yes":
+        display_statistics()
+
+    # Asks user if they would like to play again
+    play_again = yes_no_checker("Would you like to play again? ")
+    print()
+    if play_again == "no": # Ends game if the user does not want to play again
+        active = False
+    # If the user inputs yes, the program continues from the while active loop
+    print()
+    print("────────────────────────────────────") # End of while active loop
+
+# End message (appears when loop is finished
+print("Thank you for playing! 👋")
 print("────────────────────────────────────")
-print("🎉 Quiz Complete! 🎉")
-
-print(f"Score: {user_correct}/{rounds_played}") # Basic score: how many questions the user got right across the whole quiz
-print()
-
-# Asking user if they want to view statistics
-want_statistics = yes_no_checker("Would you like to see a detailed overview of your answers? ")
-print()
-if want_statistics == "yes":
-    display_statistics()
-
-# Optional play again
-# Game end
+# Program ends
