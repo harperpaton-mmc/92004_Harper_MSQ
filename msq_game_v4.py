@@ -265,7 +265,7 @@ while active: # The reason I place the while loop here is that this is the point
         elif set_question == "heat increase":
             print(f"{random_1}L of water undergoes a change in temperature from an initial temperature of {random_2}ºC to {random_3}ºC.")
             # Calculates the correct answer
-            find_answer = f"{random_1 * 4200 * (random_2 - random_3):.1f}"
+            find_answer = f"{random_1 * 4200 * (random_3 - random_2):.1f}"
             user_answer = int_check("How much heat energy is used/lost to change the temperature? If heat is lost, write the answer as a negative number.  ")
         # Heat energy (state change)
         elif set_question =="heat change":
